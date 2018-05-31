@@ -1,3 +1,16 @@
+h1 {
+    font-weight: bold;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.div-fixed-small {
+    margin: 25px auto;
+    width: 300px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
