@@ -1,11 +1,9 @@
-var yelpCamp = require("./yelpCamp");
+var mongoose = require("mongoose"),
+    Campground = require("./models/campground.js");
 
-yelpCamp.start();
+mongoose.connect("mongodb://localhost/yelpcamp");
 
-seedDatabase();
-
-function seedDatabase() {
-    var campgrounds = 
+var campgrounds = 
     [
         { 
             name: "Lake Pleasant",
@@ -23,8 +21,27 @@ function seedDatabase() {
             description: "A beautiful campsite with a stunning waterfall"
         }
     ];
-    
+
+Campground.remove({}, function(err) {
+    if (err) {
+        console.log(err);
+    } 
+    else {
+        console.log("Removed all campgrounds");
+        
+        seedDatabase();
+    }
+});
+
+function seedDatabase() {
     campgrounds.forEach(function(campground) {
-        yelpCamp.addCampground(campground);
+        Campground.create(campground, function(err, addedCampground) {
+            if (err) {
+                console.log(err);
+            } 
+            else {
+                console.log("Added campground successfully");    
+            }
+        });
     });
 }
