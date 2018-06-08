@@ -1,5 +1,6 @@
 var mongoose = require("mongoose"),
-    Campground = require("./models/campground.js");
+    Campground = require("./models/campground.js"),
+    Comment = require("./models/comment.js");
 
 mongoose.connect("mongodb://localhost/yelpcamp");
 
@@ -21,6 +22,22 @@ var campgrounds =
             description: "A beautiful campsite with a stunning waterfall"
         }
     ];
+    
+var comments = 
+    [
+        {
+            text: "This place is great",
+            author: "Hermione"
+        },
+        {
+            text: "Would definitely come again",
+            author: "Fred"
+        },
+        {
+            text: "11/10 for me",
+            author: "Sammy"
+        }
+    ];
 
 Campground.remove({}, function(err) {
     if (err) {
@@ -29,7 +46,16 @@ Campground.remove({}, function(err) {
     else {
         console.log("Removed all campgrounds");
         
-        seedDatabase();
+        Comment.remove({}, function(err) {
+            if (err) {
+                console.log(err);
+            } 
+            else {
+                console.log("Removed all comments");
+                
+                seedDatabase();
+            }
+        });
     }
 });
 
@@ -40,7 +66,18 @@ function seedDatabase() {
                 console.log(err);
             } 
             else {
-                console.log("Added campground successfully");    
+                console.log("Added campground successfully");
+                
+                Comment.create(comments[0], function(err, createdComment) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        addedCampground.comments.push(createdComment);
+                        
+                        addedCampground.save();
+                    }
+                });
             }
         });
     });

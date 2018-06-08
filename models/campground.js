@@ -1,9 +1,16 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"),
+    Comment = require("./comment.js");
 
 var campgroundSchema = new mongoose.Schema({
        name: String,
        imageURL: String,
-       description: String
+       description: String,
+       comments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment"
+            }
+        ]
     });
     
 var Campground = mongoose.model("Campground", campgroundSchema);
