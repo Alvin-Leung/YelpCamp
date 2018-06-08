@@ -1,17 +1,9 @@
-console.log("yelpCamp.js running");
-    
 var express = require("express"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser"),
     app = express();
     
-var campgroundSchema = new mongoose.Schema({
-       name: String,
-       imageURL: String,
-       description: String
-    });
-    
-var Campground = mongoose.model("Campground", campgroundSchema);
+var Campground = require("./models/campground.js")
     
 mongoose.connect("mongodb://localhost/yelpcamp");
 
@@ -43,7 +35,8 @@ app.get("/campgrounds", function(req, res) {
 app.post("/campgrounds", function(req, res) {
     var campground = {
         name: req.body.campgroundName,
-        imageURL: req.body.imageURL
+        imageURL: req.body.imageURL,
+        description: req.body.description
     }
     
     Campground.create(campground, function(err) {
@@ -51,7 +44,7 @@ app.post("/campgrounds", function(req, res) {
         {
             console.log(err);
         }
-        else
+        else 
         {
             res.redirect("/campgrounds");
         }
@@ -63,7 +56,18 @@ app.get("/campgrounds/new", function(req, res) {
 });
 
 app.get("/campgrounds/:id", function(req, res) {
-    res.send("this will be the show route!"); 
+    var id = req.params.id;
+    
+    Campground.findById(id, function(err, foundCampground) {
+        if (err) 
+        {
+            console.log(err);
+        }
+        else 
+        {
+            res.render("show", { campground: foundCampground });
+        }
+    })
 });
 
 module.exports.start = function() {

@@ -15,7 +15,3 @@ h1 {
     display: flex;
     flex-wrap: wrap;
 }
-
-.caption {
-    text-align: center;
-}
