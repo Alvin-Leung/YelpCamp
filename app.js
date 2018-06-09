@@ -23,11 +23,11 @@ app.get("/campgrounds", function(req, res) {
         {
             console.log(err);
             
-            res.render("index", { campgrounds: [] });
+            res.render("campgrounds/index", { campgrounds: [] });
         }
         else
         {
-            res.render("index", { campgrounds: campgrounds });
+            res.render("campgrounds/index", { campgrounds: campgrounds });
         }
     })
 });
@@ -52,7 +52,7 @@ app.post("/campgrounds", function(req, res) {
 });
 
 app.get("/campgrounds/new", function(req, res) {
-    res.render("new");
+    res.render("campgrounds/new");
 });
 
 app.get("/campgrounds/:id", function(req, res) {
@@ -63,7 +63,7 @@ app.get("/campgrounds/:id", function(req, res) {
         }
         else 
         {
-            res.render("show", { campground: foundCampground });
+            res.render("campgrounds/show", { campground: foundCampground });
         }
     })
 });
