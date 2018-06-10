@@ -6,6 +6,14 @@ h1 {
     text-align: center;
 }
 
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
 .div-fixed-small {
     margin: 25px auto;
     width: 300px;
