@@ -135,15 +135,30 @@ app.post("/campgrounds/:id/comments", function(req, res) {
     });
 });
 
+app.get("/login", function(req, res) {
+    res.render("login");
+});
+
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/campgrounds",
+    failureRedirect: "/login"
+}), function(req, res) {
+    
+});
+
 app.get("/register", function(req, res) {
     res.render("register"); 
 });
 
 app.post("/register", function(req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function(err, user) {
+    var newUser = new User({ username: req.body.username });
+    
+    User.register(newUser, req.body.password, function(err, user) {
         if (err) 
         {
             console.log(err);
+            
+            res.redirect("/register");
         }
         else
         {
