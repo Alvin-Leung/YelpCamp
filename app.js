@@ -96,7 +96,7 @@ app.get("/campgrounds/:id", function(req, res) {
     });
 });
 
-app.get("/campgrounds/:id/comments/new", function(req, res) {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {
@@ -109,7 +109,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
     });
 });
 
-app.post("/campgrounds/:id/comments", function(req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {
@@ -169,6 +169,23 @@ app.post("/register", function(req, res) {
     }); 
 });
 
+app.get("/logout", function(req, res) {
+    req.logout();
+    
+    res.redirect("/campgrounds");
+});
+
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("server started..");
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+    {
+        return next();   
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+}
