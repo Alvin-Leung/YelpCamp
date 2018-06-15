@@ -37,6 +37,14 @@ passport.serializeUser(User.serializeUser());
 
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next) {
+    res.locals.currentUser = req.user;
+    
+    console.log(req.user);
+    
+    next();
+});
+
 // ======
 // ROUTES
 // ======
@@ -117,6 +125,8 @@ app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
         }
         else 
         {
+            req.body.comment.author = req.user.username;
+            
             Comment.create(req.body.comment, function(err, createdComment) {
                 if (err) 
                 {
