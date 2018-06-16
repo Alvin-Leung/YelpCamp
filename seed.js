@@ -73,16 +73,16 @@ function seedDatabase() {
             else {
                 console.log("Added campground successfully");
                 
-                Comment.create(comments[0], function(err, createdComment) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        addedCampground.comments.push(createdComment);
+                // Comment.create(comments[0], function(err, createdComment) {
+                //     if (err) {
+                //         console.log(err);
+                //     }
+                //     else {
+                //         addedCampground.comments.push(createdComment);
                         
-                        addedCampground.save();
-                    }
-                });
+                //         addedCampground.save();
+                //     }
+                // });
             }
         });
     });
