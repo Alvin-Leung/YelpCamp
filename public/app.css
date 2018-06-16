@@ -23,3 +23,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
 }
+
+#delete-form {
+    display: inline;
+}
