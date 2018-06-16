@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"),
+    User = require("./models/user.js"),
     Campground = require("./models/campground.js"),
     Comment = require("./models/comment.js");
 
@@ -44,46 +45,68 @@ var comments =
         }
     ];
 
-Campground.remove({}, function(err) {
+User.remove({}, function(err) {
     if (err) {
         console.log(err);
-    } 
+    }
     else {
-        console.log("Removed all campgrounds");
+        console.log("Removed all users");
         
-        Comment.remove({}, function(err) {
+        Campground.remove({}, function(err) {
             if (err) {
                 console.log(err);
             } 
             else {
-                console.log("Removed all comments");
+                console.log("Removed all campgrounds");
                 
-                seedDatabase();
+                Comment.remove({}, function(err) {
+                    if (err) {
+                        console.log(err);
+                    } 
+                    else {
+                        console.log("Removed all comments");
+                        
+                        seedDatabase();
+                    }
+                });
             }
         });
     }
 });
 
 function seedDatabase() {
-    campgrounds.forEach(function(campground) {
-        Campground.create(campground, function(err, addedCampground) {
-            if (err) {
-                console.log(err);
-            } 
-            else {
-                console.log("Added campground successfully");
-                
-                // Comment.create(comments[0], function(err, createdComment) {
-                //     if (err) {
-                //         console.log(err);
-                //     }
-                //     else {
-                //         addedCampground.comments.push(createdComment);
+    
+    var newUser = new User({ username: "Kaitlin" });
+    
+    var password = "password";
+    
+    User.register(newUser, password, function(err, registeredUser) {
+        if (err) 
+        {
+            console.log(err);
+        }
+        else
+        {
+            console.log("Example user registration successful");
+            
+            campgrounds.forEach(function(campground) {
+                Campground.create(campground, function(err, createdCampground) {
+                    if (err) 
+                    {
+                        console.log(err);
+                    }
+                    else 
+                    {
+                        console.log("Campground created succesfuly");
                         
-                //         addedCampground.save();
-                //     }
-                // });
-            }
-        });
-    });
+                        createdCampground.author.id = registeredUser._id;
+                        
+                        createdCampground.author.username = registeredUser.username;
+                        
+                        createdCampground.save();
+                    }
+                });
+            });
+        }
+    }); 
 }
