@@ -17,6 +17,10 @@ router.get("/campgrounds", function(req, res) {
     })
 });
 
+router.get("/campgrounds/new", isLoggedIn, function(req, res) {
+    res.render("campgrounds/new");
+});
+
 router.post("/campgrounds", isLoggedIn, function(req, res) {
     var newCampground = req.body.campground;
     
@@ -41,10 +45,6 @@ router.post("/campgrounds", isLoggedIn, function(req, res) {
     });
 });
 
-router.get("/campgrounds/new", isLoggedIn, function(req, res) {
-    res.render("campgrounds/new");
-});
-
 router.get("/campgrounds/:id", function(req, res) {
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
         if (err) 
@@ -58,22 +58,13 @@ router.get("/campgrounds/:id", function(req, res) {
     });
 });
 
-router.get("/campgrounds/:id/edit", function(req, res) {
+router.get("/campgrounds/:id/edit", isLoggedIn, checkCampgroundOwnership, function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
-        if (err)
-        {
-            console.log(err);
-            
-            res.redirect("/campgrounds");
-        }
-        else
-        {
-            res.render("campgrounds/edit", { campground: foundCampground });
-        }
+        res.render("campgrounds/edit", { campground: foundCampground });
     });
 });
 
-router.put("/campgrounds/:id", function(req, res) {
+router.put("/campgrounds/:id", isLoggedIn, checkCampgroundOwnership, function(req, res) {
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
         if (err) 
         {
@@ -88,7 +79,7 @@ router.put("/campgrounds/:id", function(req, res) {
     });
 });
 
-router.delete("/campgrounds/:id", function(req, res) {
+router.delete("/campgrounds/:id", isLoggedIn, checkCampgroundOwnership, function(req, res) {
     Campground.findByIdAndRemove(req.params.id, function(err) {
         if (err) 
         {
@@ -112,6 +103,30 @@ function isLoggedIn(req, res, next) {
     {
         res.redirect("/login");
     }
+}
+
+function checkCampgroundOwnership(req, res, next) {
+    var currentUserID = req.user._id;
+    
+    var campgroundID = req.params.id;
+    
+    Campground.findById(campgroundID, function(err, foundCampground) {
+        if (err) 
+        {
+            res.redirect("back");
+        }    
+        else 
+        {
+            if(foundCampground.author.id.equals(currentUserID))
+            {
+                next();
+            }
+            else 
+            {
+                res.redirect("back");
+            }
+        }
+    });
 }
 
 module.exports = router;
