@@ -23,6 +23,7 @@
                     <p>
                         <em>Submitted by <%= campground.author.username %></em>
                     </p>
+                    <a href="<%= campground._id + "/edit" %>" type="button" class="btn btn-warning">Edit</a>
                 </div>
             </div>
             
@@ -45,7 +46,5 @@
     </div>
     
 </div>
-
-
 
 <% include ../partials/footer %>

@@ -4,6 +4,7 @@ var express = require("express"),
     LocalStrategy = require("passport-local"),
     expressSession = require("express-session"),
     bodyParser = require("body-parser"),
+    methodOverride = require("method-override"),
     app = express(),
     User = require("./models/user"),
     indexRoutes = require("./routes/index"),
@@ -16,6 +17,7 @@ mongoose.connect("mongodb://localhost/yelpcamp");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 app.use(expressSession({
     secret: "campgrounds rock!",
