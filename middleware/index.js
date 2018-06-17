@@ -7,6 +7,8 @@ function isLoggedIn(req, res, next) {
     }
     else
     {
+        req.flash("error", "Login required");
+        
         res.redirect("/login");
     }
 }
@@ -19,7 +21,9 @@ function checkCampgroundOwnership(req, res, next) {
     Campground.findById(campgroundID, function(err, foundCampground) {
         if (err) 
         {
-            res.redirect("back");
+            req.flash("error", "Could not find campground");
+            
+            res.redirect("/campgrounds");
         }    
         else 
         {
@@ -29,7 +33,9 @@ function checkCampgroundOwnership(req, res, next) {
             }
             else 
             {
-                res.redirect("back");
+                req.flash("error", "You are not authorized to modify this campground");
+                
+                res.redirect("/campgrounds/" + campgroundID);
             }
         }
     });

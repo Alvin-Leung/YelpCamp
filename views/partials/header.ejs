@@ -33,3 +33,9 @@
 	        </div>
 	    </div>
 	</nav>
+	
+	<% if (message.error != undefined && message.error.length >= 1) { %>
+	<div class="alert alert-danger" role="alert">
+		<%= message.error %>
+	</div>
+	<% } %>

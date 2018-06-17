@@ -5,9 +5,11 @@ var express = require("express"),
     expressSession = require("express-session"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
+    flash = require("connect-flash"),
     app = express(),
-    User = require("./models/user"),
-    indexRoutes = require("./routes/index"),
+    User = require("./models/user");
+    
+var indexRoutes = require("./routes/index"),
     campgroundRoutes = require("./routes/campgrounds"),
     commentRoutes = require("./routes/comments"),
     authenticationRoutes = require("./routes/authentication");
@@ -18,6 +20,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 app.use(expressSession({
     secret: "campgrounds rock!",
@@ -34,6 +37,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
+    res.locals.message = req.flash();
     next();
 });
 
