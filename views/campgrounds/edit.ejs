@@ -7,6 +7,9 @@
                     <input type="text" class="form-control" name="campground[name]" placeholder="name" value="<%= campground.name %>">
                 </div>
                 <div class="form-group">
+                    <input type="number" min="0.00" step="0.01" class="form-control" name="campground[pricePerNight]" placeholder="0.00" value="<%= campground.pricePerNight %>">
+                </div>
+                <div class="form-group">
                     <input type="text" class="form-control" name="campground[imageURL]" placeholder="image url" value="<%= campground.imageURL %>">
                 </div>
                 <div class="form-group">
