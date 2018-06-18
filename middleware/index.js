@@ -19,7 +19,7 @@ function checkCampgroundOwnership(req, res, next) {
     var campgroundID = req.params.id;
     
     Campground.findById(campgroundID, function(err, foundCampground) {
-        if (err) 
+        if (err || foundCampground === null) 
         {
             req.flash("error", "Campground not found");
             

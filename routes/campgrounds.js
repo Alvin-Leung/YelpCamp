@@ -50,10 +50,10 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req, res) {
 
 router.get("/campgrounds/:id", function(req, res) {
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
-        if (err) 
+        if (err || foundCampground === null) 
         {
             req.flash("error", "The specified campground does not exist");
-            
+
             res.redirect("/campgrounds");
         }
         else 
@@ -71,7 +71,7 @@ router.get("/campgrounds/:id/edit", middleware.isLoggedIn, middleware.checkCampg
 
 router.put("/campgrounds/:id", middleware.isLoggedIn, middleware.checkCampgroundOwnership, function(req, res) {
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
-        req.flash("success", "Changes to campground successfully saved");
+        req.flash("success", "Changes to campground saved");
         
         res.redirect("/campgrounds/" + req.params.id);
     });
