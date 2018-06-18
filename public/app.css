@@ -24,6 +24,10 @@ h1 {
     flex-wrap: wrap;
 }
 
+.glyphicon.glyphicon-tent {
+    top: 6px;
+}
+
 #delete-form {
     display: inline;
 }
