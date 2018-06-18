@@ -21,7 +21,7 @@ function checkCampgroundOwnership(req, res, next) {
     Campground.findById(campgroundID, function(err, foundCampground) {
         if (err) 
         {
-            req.flash("error", "Could not find campground");
+            req.flash("error", "Campground not found");
             
             res.redirect("/campgrounds");
         }    

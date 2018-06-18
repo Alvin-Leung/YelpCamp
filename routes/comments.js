@@ -8,7 +8,7 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req,
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {
-            console.log(err);
+            req.flash("error", err.message);
         }
         else 
         {
@@ -21,7 +21,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {
-            console.log(err);
+            req.flash("error", err.message);
         }
         else 
         {
@@ -30,7 +30,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
             Comment.create(req.body.comment, function(err, createdComment) {
                 if (err) 
                 {
-                    console.log(err);    
+                    req.flash("error", "Something went wrong");   
                 }
                 else 
                 {
@@ -43,6 +43,8 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
                     foundCampground.comments.push(createdComment);
                     
                     foundCampground.save();
+                    
+                    req.flash("success", "Successfully created comment");
                     
                     res.redirect("/campgrounds/" + req.params.id);
                 }
