@@ -83,15 +83,28 @@ router.put("/campgrounds/:id/comments/:commentID", function(req, res) {
     Comment.findByIdAndUpdate(req.params.commentID, req.body.comment, function(err, updatedComment) {
         if (err) {
             req.flash("error", "Could not update comment");
-            
-            res.redirect("/campgrounds/" + req.params.id);
         }
         else 
         {
             req.flash("success", "Changes to comment saved");
-            
-            res.redirect("/campgrounds/" + req.params.id);
         }
+        
+        res.redirect("/campgrounds/" + req.params.id);
+    });
+});
+
+router.delete("/campgrounds/:id/comments/:commentID", function(req, res) {
+    Comment.findByIdAndRemove(req.params.commentID, function(err) {
+        if (err) 
+        {
+            req.flash("error", "Could not remove comment");
+        }
+        else
+        {
+            req.flash("success", "Comment deleted");
+        }
+        
+        res.redirect("/campgrounds/" + req.params.id);
     });
 });
 
