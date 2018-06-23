@@ -81,7 +81,8 @@ router.get("/campgrounds/:id/comments/:commentID/edit", middleware.isLoggedIn, m
 
 router.put("/campgrounds/:id/comments/:commentID", middleware.isLoggedIn, middleware.checkCommentOwnership, function(req, res) {
     Comment.findByIdAndUpdate(req.params.commentID, req.body.comment, function(err, updatedComment) {
-        if (err) {
+        if (err) 
+        {
             req.flash("error", "Could not update comment");
         }
         else 
