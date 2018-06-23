@@ -80,7 +80,19 @@ router.get("/campgrounds/:id/comments/:commentID/edit", function(req, res) {
 });
 
 router.put("/campgrounds/:id/comments/:commentID", function(req, res) {
-    res.send("Edited comment");
-})
+    Comment.findByIdAndUpdate(req.params.commentID, req.body.comment, function(err, updatedComment) {
+        if (err) {
+            req.flash("error", "Could not update comment");
+            
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+        else 
+        {
+            req.flash("success", "Changes to comment saved");
+            
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    });
+});
 
 module.exports = router;
