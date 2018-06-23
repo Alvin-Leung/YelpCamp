@@ -1,4 +1,5 @@
-var Campground = require("../models/campground");
+var Campground = require("../models/campground"),
+    Comment = require("../models/comment");
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
@@ -41,9 +42,35 @@ function checkCampgroundOwnership(req, res, next) {
     });
 }
 
+function checkCommentOwnership(req, res, next) {
+    var currentUserID = req.user._id,
+        campgroundID = req.params.id,
+        commentID = req.params.commentID;
+    
+    Comment.findById(commentID, function(err, foundComment) {
+        if (err || foundComment === null)
+        {
+            req.flash("error", "Comment not found");
+            
+            res.redirect("/campgrounds/" + campgroundID);
+        }
+        else if (foundComment.author.id.equals(currentUserID))
+        {
+            next();
+        }
+        else 
+        {
+            req.flash("error", "You are not authorized to modify this comment");
+            
+            res.redirect("/campgrounds/" + campgroundID);
+        }
+    });
+}
+
 var middlewareObj = {
     isLoggedIn: isLoggedIn,
-    checkCampgroundOwnership: checkCampgroundOwnership
+    checkCampgroundOwnership: checkCampgroundOwnership,
+    checkCommentOwnership: checkCommentOwnership
 };
 
 module.exports = middlewareObj;
