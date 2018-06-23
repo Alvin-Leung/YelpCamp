@@ -15,7 +15,7 @@ router.get("/campgrounds", function(req, res) {
         {
             res.render("campgrounds/index", { campgrounds: campgrounds });
         }
-    })
+    });
 });
 
 router.get("/campgrounds/new", middleware.isLoggedIn, function(req, res) {

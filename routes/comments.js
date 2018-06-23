@@ -53,4 +53,34 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
     });
 });
 
+router.get("/campgrounds/:id/comments/:commentID/edit", function(req, res) {
+    Campground.findById(req.params.id, function(err, foundCampground) {
+        if (err || foundCampground === null) 
+        {
+            req.flash("error", "Could not find campground");
+            
+            res.redirect("/campgrounds/");
+        }
+        else
+        {
+            Comment.findById(req.params.commentID, function(err, foundComment) {
+                if(err || foundComment === null) 
+                {
+                    req.flash("error", "Could not find comment");
+                    
+                    res.redirect("/campgrounds/" + req.params.id);
+                } 
+                else
+                {
+                    res.render("comments/edit", { campground: foundCampground, comment: foundComment });
+                }
+            });
+        }
+    });
+});
+
+router.put("/campgrounds/:id/comments/:commentID", function(req, res) {
+    res.send("Edited comment");
+})
+
 module.exports = router;
