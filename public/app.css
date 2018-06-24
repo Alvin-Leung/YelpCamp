@@ -2,6 +2,14 @@ h1 {
     font-weight: bold;
 }
 
+.comment-header {
+    padding-top: 10px;
+}
+
+.float-right {
+    float: right;
+}
+
 .center-text {
     text-align: center;
 }
@@ -26,6 +34,26 @@ h1 {
 
 .glyphicon.glyphicon-tent {
     top: 6px;
+}
+
+.glyphicon.glyphicon-comment {
+    top: 6px;
+}
+
+.glyphicon.glyphicon-star-empty {
+    color: rgb(255, 191, 0);
+}
+
+.glyphicon.glyphicon-star {
+    color: rgb(255, 191, 0);
+}
+
+.well h1 {
+    margin-top: 0px;
+}
+
+#add-comment-btn {
+    margin-top: 4px;
 }
 
 #delete-form {
