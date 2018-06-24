@@ -8,11 +8,13 @@ router.get("/login", function(req, res) {
 });
 
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/campgrounds",
     failureRedirect: "/login",
-    successFlash: "You have successfully logged in",
     failureFlash: true
-}));
+}), function(req, res) {
+    req.flash("success", "Welcome back to YelpCamp " + req.user.username + "!");
+    
+    res.redirect("/campgrounds");
+});
 
 router.get("/register", function(req, res) {
     res.render("register"); 
