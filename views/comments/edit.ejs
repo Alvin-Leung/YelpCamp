@@ -2,7 +2,17 @@
     <div class="container">
         <h1 class="center-text">Edit Comment</h1>
         <div class="div-fixed-small">
+           <div class="comment-review">
+            <% for(var i=1; i<=5; i++) { %>
+                <% if(i<=comment.rating) { %>
+                    <span class="glyphicon glyphicon-star"></span>
+                <% } else { %>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                <% } %>
+            <% } %>
+            </div>
             <form action="<%= "/campgrounds/" + campground._id + "/comments/" + comment._id + "?_method=PUT" %>" method="post">
+                <input type="hidden" id="rating-input" name="comment[rating]" value="<%= comment.rating %>">
                 <div class="form-group">
                     <textarea class="form-control" name="comment[text]" placeholder="text"><%= comment.text %></textarea>
                 </div>
