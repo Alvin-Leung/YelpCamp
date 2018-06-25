@@ -10,6 +10,7 @@
                 <span class="glyphicon glyphicon-star-empty"></span>
             </div>
             <form action=<%= "/campgrounds/" + campground._id + "/comments" %> method="post">
+                <input type="hidden" id="rating-input" name="comment[rating]" value="0">
                 <div class="form-group">
                     <textarea class="form-control" name="comment[text]" placeholder="comment"></textarea>
                 </div>

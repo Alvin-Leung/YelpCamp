@@ -101,7 +101,7 @@ function seedDatabase() {
                     }
                     else 
                     {
-                        console.log("Campground created succesfuly");
+                        console.log("Campground created successfuly");
                         
                         createdCampground.author.id = registeredUser._id;
                         

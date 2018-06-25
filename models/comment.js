@@ -9,6 +9,7 @@ var commentSchema = new mongoose.Schema({
               },
               username: String
        },
+       rating: Number,
        created: { 
               type: Date, 
               default: Date.now 

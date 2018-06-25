@@ -4,7 +4,7 @@ var express = require("express"),
     Campground = require("../models/campground"),
     Comment = require("../models/comment");
 
-router.get("/campgrounds/:id/comments/new", function(req, res) {
+router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {
@@ -26,6 +26,15 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
         else 
         {
             req.body.comment.author = req.user.username;
+            
+            if (req.body.comment.rating < 0)
+            {
+                req.body.comment.rating = 1;
+            }
+            else if (req.body.comment.rating > 5)
+            {
+                req.body.comment.rating = 5;
+            }
             
             Comment.create(req.body.comment, function(err, createdComment) {
                 if (err) 

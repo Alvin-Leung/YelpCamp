@@ -3,6 +3,25 @@ $(document).ready(function() {
         window.history.back();
     });
     
+    var originalAddClassMethod = $.fn.addClass;
+
+    $.fn.addClass = function(){
+        // Execute the original method.
+        var result = originalAddClassMethod.apply( this, arguments );
+
+        // trigger a custom event
+        $(this).trigger("cssClassChanged");
+    
+        // return the original result
+        return result;
+    }
+    
+    $(".comment-review span").bind("cssClassChanged", function() {
+        var numEnabledStars = $(".glyphicon-star").length;
+        
+        $("#rating-input").attr("value", numEnabledStars);
+    });
+    
     var reviewStars = $(".comment-review span");
     
     reviewStars.each(function(index, star) {

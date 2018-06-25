@@ -42,11 +42,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="comment-header">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <% for(var i=1; i<=5; i++) { %>
+                                    <% if(i<=comment.rating) { %>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    <% } else { %>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    <% } %>
+                                <% } %>
                                 <strong><%= comment.author.username %></strong>
                                 <span class="pull-right"><%= comment.created.toDateString() %></span>
                             </div>
