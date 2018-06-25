@@ -4,7 +4,7 @@ var express = require("express"),
     Campground = require("../models/campground"),
     Comment = require("../models/comment");
 
-router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req, res) {
+router.get("/campgrounds/:id/comments/new", function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) 
         {

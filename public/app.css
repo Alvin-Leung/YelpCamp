@@ -32,6 +32,12 @@ h1 {
     flex-wrap: wrap;
 }
 
+.comment-review {
+    font-size: 2em;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .glyphicon.glyphicon-tent {
     top: 6px;
 }

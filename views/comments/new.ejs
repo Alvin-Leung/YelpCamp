@@ -2,6 +2,13 @@
     <div class="container">
         <h1 class="center-text">Create a New Comment for <%= campground.name %></h1>
         <div class="div-fixed-small">
+            <div class="comment-review">
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
+            </div>
             <form action=<%= "/campgrounds/" + campground._id + "/comments" %> method="post">
                 <div class="form-group">
                     <textarea class="form-control" name="comment[text]" placeholder="comment"></textarea>
