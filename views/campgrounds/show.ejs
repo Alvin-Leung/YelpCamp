@@ -6,9 +6,9 @@
             <p class="lead">Yelp Camp</p>
             
             <div class="list-group" role="group" aria-label="...">
-                <li class="list-group-item active">Category 1</li>
-                <li class="list-group-item">Category 2</li>
-                <li class="list-group-item">Category 3</li>
+                <li class="list-group-item active">Overview</li>
+                <li class="list-group-item">Details</li>
+                <li class="list-group-item">Photos</li>
             </div>
         </div>
         
@@ -55,10 +55,12 @@
                             <p><%= comment.text %></p>
                             
                             <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <a href="<%= "/campgrounds/" + campground._id + "/comments/" + comment._id + "/edit" %>" class="btn btn-warning btn-xs">Edit</a>
-                                <form id="delete-comment" class="ui form" action="<%= "/campgrounds/" + campground._id + "/comments/" + comment._id + "?_method=DELETE" %>" method="post">
-                                    <button type="submit" class="btn btn-danger btn-xs">Delete</button>
-                                </form>
+                                <div class="edit-delete-btns">
+                                    <a href="<%= "/campgrounds/" + campground._id + "/comments/" + comment._id + "/edit" %>" class="btn btn-warning btn-xs">Edit</a>
+                                    <form id="delete-comment" class="ui form" action="<%= "/campgrounds/" + campground._id + "/comments/" + comment._id + "?_method=DELETE" %>" method="post">
+                                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                                    </form>
+                                </div>
                             <% } %>
                         </div>
                     </div class="row">
