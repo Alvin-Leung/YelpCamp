@@ -128,9 +128,9 @@ User.remove({}, function(err) {
 
 function seedDatabase() {
     
-    var newUser = new User({ username: "Kaitlin" });
+    var newUser = new User({ username: "Admin" });
     
-    var password = "password";
+    var password = process.env.ADMINPASSWORD;
     
     User.register(newUser, password, function(err, registeredUser) {
         if (err) 
