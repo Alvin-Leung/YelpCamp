@@ -27,6 +27,10 @@ h1 {
     width: 300px;
 }
 
+.missing-rating {
+    font-size: 12px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;

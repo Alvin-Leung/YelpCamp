@@ -39,7 +39,9 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
             Comment.create(req.body.comment, function(err, createdComment) {
                 if (err) 
                 {
-                    req.flash("error", "Something went wrong");   
+                    req.flash("error", "Something went wrong");
+                    
+                    res.redirect("/campgrounds/" + req.params.id);
                 }
                 else 
                 {
@@ -51,11 +53,20 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
                     
                     foundCampground.comments.push(createdComment);
                     
-                    foundCampground.save();
-                    
-                    req.flash("success", "Successfully created comment");
-                    
-                    res.redirect("/campgrounds/" + req.params.id);
+                    foundCampground.updateAverageRating(function(err, updatedCampground) {
+                        if (err)
+                        {
+                            req.flash("error", "Something went wrong");
+                        }
+                        else
+                        {
+                            updatedCampground.save();
+                            
+                            req.flash("success", "Successfully created comment");
+                        }
+                        
+                        res.redirect("/campgrounds/" + req.params.id);
+                    });
                 }
             });
         }
@@ -93,13 +104,28 @@ router.put("/campgrounds/:id/comments/:commentID", middleware.isLoggedIn, middle
         if (err) 
         {
             req.flash("error", "Could not update comment");
+            
+            res.redirect("/campgrounds/" + req.params.id);
         }
         else 
         {
-            req.flash("success", "Changes to comment saved");
+            Campground.findById(req.params.id, function(err, foundCampground) {
+                foundCampground.updateAverageRating(function(err, updatedCampground) {
+                    if (err)
+                    {
+                        req.flash("error", "Could not update comment");
+                    }
+                    else
+                    {
+                        updatedCampground.save();
+                        
+                        req.flash("success", "Changes to comment saved");
+                    }
+                    
+                    res.redirect("/campgrounds/" + req.params.id);
+                });
+            });
         }
-        
-        res.redirect("/campgrounds/" + req.params.id);
     });
 });
 
@@ -108,13 +134,28 @@ router.delete("/campgrounds/:id/comments/:commentID", middleware.isLoggedIn, mid
         if (err) 
         {
             req.flash("error", "Could not remove comment");
+            
+            res.redirect("/campgrounds/" + req.params.id);
         }
         else
         {
-            req.flash("success", "Comment deleted");
+            Campground.findById(req.params.id, function(err, foundCampground) {
+                foundCampground.updateAverageRating(function(err, updatedCampground) {
+                    if (err)
+                    {
+                        req.flash("error", "Something went wrong");
+                    }
+                    else
+                    {
+                        updatedCampground.save();
+                        
+                        req.flash("success", "Comment deleted");
+                    }
+                    
+                    res.redirect("/campgrounds/" + req.params.id);
+                });
+            });
         }
-        
-        res.redirect("/campgrounds/" + req.params.id);
     });
 });
 

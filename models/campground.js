@@ -18,8 +18,33 @@ var campgroundSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Comment"
             }
-        ]
+        ],
+        averageRating: {
+            type: Number,
+            default: 0
+        }
     });
+    
+campgroundSchema.methods.updateAverageRating = function(callback) {
+    this.populate("comments", function(err, populatedCampground) {
+        if (err || populatedCampground === null || populatedCampground.comments.length === 0)
+        {
+            callback(err, null);
+        }
+        else 
+        {
+            var sum = 0;
+            
+            populatedCampground.comments.forEach(function(comment) {
+                sum += comment.rating;
+            })
+            
+            populatedCampground.averageRating = Math.round(sum/populatedCampground.comments.length);
+            
+            callback(null, populatedCampground);    
+        }
+    })
+}
     
 var Campground = mongoose.model("Campground", campgroundSchema);
 
