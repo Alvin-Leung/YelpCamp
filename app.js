@@ -13,8 +13,8 @@ var indexRoutes = require("./routes/index"),
     campgroundRoutes = require("./routes/campgrounds"),
     commentRoutes = require("./routes/comments"),
     authenticationRoutes = require("./routes/authentication");
-    
-mongoose.connect("mongodb://localhost/yelpcamp");
+
+mongoose.connect(process.env.YELPCAMPDB);
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));

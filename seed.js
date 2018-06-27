@@ -3,7 +3,7 @@ var mongoose = require("mongoose"),
     Campground = require("./models/campground.js"),
     Comment = require("./models/comment.js");
 
-mongoose.connect("mongodb://localhost/yelpcamp");
+mongoose.connect(process.env.YELPCAMPDB);
 
 var campgrounds = 
     [
@@ -145,17 +145,17 @@ function seedDatabase() {
                 Campground.create(campground, function(err, createdCampground) {
                     if (err) 
                     {
-                        console.log(err);
+                        console.log("Error creating campground");
                     }
                     else 
                     {
-                        console.log("Campground created successfuly");
-                        
                         createdCampground.author.id = registeredUser._id;
                         
                         createdCampground.author.username = registeredUser.username;
                         
                         createdCampground.save();
+                        
+                        console.log("Campground created successfully");
                     }
                 });
             });
