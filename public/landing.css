@@ -29,7 +29,7 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(https://images.unsplash.com/photo-1438382458652-54431bf59e01?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0b1dd113ebda1011e6e07d3ec2bf056&auto=format&fit=crop&w=1353&q=80);
+  background-image: url(https://images.unsplash.com/photo-1506535995048-638aa1b62b77?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f3e3ff1cce6d43ff22a50a83269f07ac&auto=format&fit=crop&w=1950&q=80);
 }
 .slideshow li:nth-child(2) { 
   background-image: url(https://images.unsplash.com/photo-1476979735039-2fdea9e9e407?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=590c3456f82935f19e5dd49f469e1ac5&auto=format&fit=crop&w=1950&q=80);
