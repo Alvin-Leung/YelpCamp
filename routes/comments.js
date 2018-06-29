@@ -130,15 +130,17 @@ router.put("/campgrounds/:id/comments/:commentID", middleware.isLoggedIn, middle
 });
 
 router.delete("/campgrounds/:id/comments/:commentID", middleware.isLoggedIn, middleware.checkCommentOwnership, function(req, res) {
-    Comment.findByIdAndRemove(req.params.commentID, function(err) {
+    Comment.findById(req.params.commentID, function(err, foundComment) {
         if (err) 
         {
-            req.flash("error", "Could not remove comment");
+            req.flash("error", "Could not find comment");
             
             res.redirect("/campgrounds/" + req.params.id);
         }
         else
         {
+            foundComment.remove();
+            
             Campground.findById(req.params.id, function(err, foundCampground) {
                 foundCampground.updateAverageRating(function(err, updatedCampground) {
                     if (err)
