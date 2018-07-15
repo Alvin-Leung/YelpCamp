@@ -1,3 +1,7 @@
+var port = process.env.PORT || "3000";
+
+var ipAddress = process.env.IP || "0.0.0.0";
+
 var express = require("express"),
     mongoose = require("mongoose"),
     passport = require("passport"),
@@ -46,6 +50,6 @@ app.use(campgroundRoutes);
 app.use(commentRoutes);
 app.use(authenticationRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function() {
+app.listen(port, ipAddress, function() {
     console.log("server started..");
 });
