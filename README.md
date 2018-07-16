@@ -41,7 +41,7 @@ npm install
 ```bash
 YELPCAMPDB=mongodb://localhost:27017/yelpcamp node app.js
 ```
-4. The application is set to listen for http requests on port 3000 by default. Open your web browser and go to http://localhost:3000/. You should see the blog application in your browser.
+4. The application is set to listen for http requests on port 3000 by default. Open your web browser and go to http://localhost:3000/. You should see the application in your browser.
 
 ### Windows Setup
 
@@ -58,7 +58,7 @@ npm install
 ```bash
 set YELPCAMPDB=mongodb://localhost:27017/yelpcamp&&node app.js
 ```
-4. The application is set to listen for http requests on port 3000 by default. Open your web browser and go to http://localhost:3000/. You should see the blog application in your browser.
+4. The application is set to listen for http requests on port 3000 by default. Open your web browser and go to http://localhost:3000/. You should see the application in your browser.
 
 ## Libraries/Frameworks Used
 ### Front-end
